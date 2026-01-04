@@ -1,0 +1,7 @@
+<CommandScript>
+	<DrawCardsPlayer0 cardNumber="4"/>
+	<DrawCardsPlayer1 cardNumber="4"/>
+<!--	<EnterActionPhrasePlayer0 />
+<!--	<ManipulateOpponentCardPlayer0 />-->
+	<StartTurnPlayer0/>
+</CommandScript>

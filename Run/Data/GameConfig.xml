@@ -1,0 +1,40 @@
+<GameConfig
+  windowTitle="Legends of the Guildhall"
+  windowFullscreen="false"
+  windowAspect="2.0"
+
+  netMode="Server"
+  netSendBufferSize="2048"
+  netRecvBufferSize="2048"
+  netHostAddress="10.9.150.73:23456"
+
+/>
+
+ <!-- 
+ netHostAddress="127.0.0.1:23456"
+ -->
+<!--
+  windowSize="2400,1200"
+  windowPosition="80,40"
+
+  windowSize="1800,900"
+  windowPosition="60,40"
+  
+  defaultMap="Grid4x4"
+  defaultMap="Grid8x8"
+  defaultMap="Grid12x12"
+-->
+
+<!--
+  windowTitle="Vaporum Client"
+  windowSize="1500,500"
+  windowPosition="35,575"
+  netMode="Client"
+-->
+
+<!--
+  windowTitle="Vaporum Server"
+  windowSize="1500,500"
+  windowPosition="35,35"
+  netMode="Server"
+-->

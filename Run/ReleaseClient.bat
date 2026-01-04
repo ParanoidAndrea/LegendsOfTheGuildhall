@@ -1,0 +1,1 @@
+start "" LegendsOfTheGuildhall_Release_x64 LoadGameConfig File=Data/GameConfig_Client.xml

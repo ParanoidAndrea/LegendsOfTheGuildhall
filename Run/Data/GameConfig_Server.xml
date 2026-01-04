@@ -1,0 +1,16 @@
+<GameConfig
+  windowTitle="Legends of the Guildhall Server"
+  windowFullscreen="false"
+  windowSize="1500,500"
+  windowPosition="35,35"
+  netMode="Server"
+/>
+
+<!--
+  windowTitle="Vaporum Server"
+  windowFullscreen="false"
+  windowSize="1500,500"
+  windowPosition="35,35"
+  netMode="Server"
+-->
+
