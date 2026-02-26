@@ -150,6 +150,12 @@ class Player
 - **Tilde (~)**: Open developer console
 - **UI Buttons**: Navigate game phases and actions
 
+## 🛠️ Debugging Guide
+
+If you are revisiting this project and want a repeatable process for networking bugs, see:
+
+- [`NETWORK_DEBUGGING.md`](NETWORK_DEBUGGING.md): practical 1v1 client-server debugging playbook tailored to this codebase.
+
 ## 📊 Development Insights
 
 ### Challenges Overcome
