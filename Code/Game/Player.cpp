@@ -8,9 +8,10 @@
 #include "Engine/UI/Button.hpp"
 #include "Engine/Core/Timer.hpp"
 #include "Game/ManipulateWidget.hpp"
-Player::Player(Game* game, int playerIndex, std::string const& playerName, std::string const& playerIconPath, bool IsAI) :m_game(game), m_playerIndex(playerIndex), m_playerIconPath(playerIconPath), m_playerName(playerName)
+#include "Game/PlayerController.hpp"
+#include <algorithm>
+Player::Player(Game* game, int playerIndex, std::string const& playerName, std::string const& playerIconPath) :m_game(game), m_playerIndex(playerIndex), m_playerIconPath(playerIconPath), m_playerName(playerName)
 {
-    UNUSED(IsAI);
     m_camera = Camera(Vec2(), Vec2(SCREEN_SIZE_X, SCREEN_SIZE_Y));
     m_cardManager = new CardManager();
     m_buttonWidget = new Widget(g_theRenderer, SCREEN_AREA);
@@ -30,6 +31,14 @@ Player::Player(Game* game, int playerIndex, std::string const& playerName, std::
 Player::~Player()
 {
     g_theEventSystem->UnsubscribeAllEventCallbackObjectMethods(this);
+    delete m_controller;
+    m_controller = nullptr;
+}
+
+void Player::SetController(PlayerController* controller)
+{
+    delete m_controller;
+    m_controller = controller;
 }
 
 
@@ -378,6 +387,10 @@ void Player::Update(float deltaSeconds)
         m_transitionTimer->Stop();
         FireEvent("TransitionEventPlayer"+ToString(m_playerIndex));
     }
+    if (m_controller)
+    {
+        m_controller->Update(*this);
+    }
 }
 
 void Player::UpdateActive()
@@ -504,6 +517,10 @@ void Player::EnterActionPhrase()
     
     m_game->AddGlobalText(m_playerName + " start Action");
     m_actionState = ActionState::HaveNotPlayedStrike;
+    if (m_controller)
+    {
+        m_controller->OnEnterActionPhrase(*this);
+    }
 
     //m_currentActionState
     //m_transitionTimer->Start();
@@ -602,6 +619,10 @@ bool Player::Event_EnterDyingPhrase(EventArgs& args)
     if (g_netState == NetState::REMOTE && IsMainPlayer())
     {
         g_netSystem->Send("EnterDyingPhrasePlayer" + ToString(m_playerIndex), args);
+    }
+    if (m_controller)
+    {
+        m_controller->OnEnterDyingPhrase(*this, args);
     }
     return true;
 }
@@ -882,6 +903,10 @@ bool Player::Event_NeedToRespondDodge( EventArgs& args)
     {
         g_netSystem->Send("NeedToRespondDodgePlayer" + ToString(m_playerIndex), args);
     }
+    if (m_controller)
+    {
+        m_controller->OnNeedToRespondDodge(*this, args);
+    }
     return true;
 }
 
@@ -897,6 +922,10 @@ bool Player::Event_NeedToRespondStrike(EventArgs& args)
     {
         g_netSystem->Send("NeedToRespondStrikePlayer" + ToString(m_playerIndex), args);
     }
+    if (m_controller)
+    {
+        m_controller->OnNeedToRespondStrike(*this, args);
+    }
     return true;
 }
 
@@ -910,6 +939,10 @@ bool Player::Event_InitialzieDuel(EventArgs& args)
     if (g_netState == NetState::REMOTE && IsMainPlayer())
     {
         g_netSystem->Send("InitialzieDuelPlayer" + ToString(m_playerIndex), args);
+    }
+    if (m_controller)
+    {
+        m_controller->OnNeedToRespondDuel(*this, args);
     }
     return true;
 }
@@ -949,6 +982,10 @@ bool Player::Event_NeedToRespondDuel(EventArgs& args)
     {
         args.SetValue("SelectedCardIndex", cardIndex);
         g_netSystem->Send("NeedToRespondDuelPlayer" + ToString(m_playerIndex), args);
+    }
+    if (m_controller)
+    {
+        m_controller->OnNeedToRespondDuel(*this, args);
     }
     return true;
 }
@@ -1091,15 +1128,20 @@ bool Player::Event_SelectCard(EventArgs& args)
 
 bool Player::Event_PlayCard(EventArgs& args)
 {
-    int cardIndex = args.GetValue("CardIndex", -1);
-    if (cardIndex < 0 && m_cardManager->m_selectedIndexes.empty())
-    {
-        return true;
-    }
-    else if (cardIndex < 0 || cardIndex>= m_cardManager->m_selectedIndexes.size())
+    int cardIndex = -1;
+    if (!m_cardManager->m_selectedIndexes.empty())
     {
         cardIndex = m_cardManager->m_selectedIndexes[0];
         args.SetValue("CardIndex", cardIndex);
+    }
+    else
+    {
+        cardIndex = args.GetValue("CardIndex", -1);
+    }
+    if (cardIndex < 0 || cardIndex >= (int)m_carddataInHand.size())
+    {
+        m_game->AddGlobalText("ERROR the CardIndex of Played Card", Rgba8::RED);
+        return true;
     }
     m_cardManager->PlayCard(cardIndex);
     g_cardDeck->DiscardSingleCard(m_carddataInHand[cardIndex]);

@@ -48,6 +48,9 @@
     <ClCompile Include="BasicCard.cpp">
       <Filter>Card</Filter>
     </ClCompile>
+    <ClCompile Include="BossAIController.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
     <ClCompile Include="ScrollToolCard.cpp">
       <Filter>Card</Filter>
     </ClCompile>
@@ -75,6 +78,12 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Player.hpp">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.hpp">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="BossAIController.hpp">
       <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Artist.hpp">

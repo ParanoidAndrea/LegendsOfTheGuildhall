@@ -7,6 +7,38 @@
 #include "Engine/Core/EventSystem.hpp"
 #include "Game/Player.hpp"
 #include "Engine/UI/UISystem.hpp"
+
+namespace
+{
+std::string GetCardSuitName(CardSuit suit)
+{
+    switch (suit)
+    {
+    case CardSuit::Diamond: return "Diamond";
+    case CardSuit::Club:    return "Club";
+    case CardSuit::Heart:   return "Heart";
+    case CardSuit::Spade:   return "Spade";
+    default:                return "Unknown";
+    }
+}
+
+void PrintPlayerHandToConsole(Player const* player)
+{
+    if (player == nullptr)
+    {
+        g_theConsole->AddLine(DevConsole::INFO_ERROR, "PrintHand failed: player does not exist");
+        return;
+    }
+
+    g_theConsole->AddLine(DevConsole::INFO_MAJOR, Stringf("Player %d %s hand (%d cards):", player->m_playerIndex, player->m_playerName.c_str(), (int)player->m_carddataInHand.size()));
+    for (int cardIndex = 0; cardIndex < (int)player->m_carddataInHand.size(); ++cardIndex)
+    {
+        CardData const& card = player->m_carddataInHand[cardIndex];
+        g_theConsole->AddLine(DevConsole::INFO_MINOR, Stringf("  [%d] %s, rank=%d, suit=%s", cardIndex, card.m_displayName.c_str(), card.m_rank, GetCardSuitName(card.m_suit).c_str()));
+    }
+}
+}
+
 // Created and owned by the App
 Renderer* g_theRenderer = nullptr;
 InputSystem* g_theInput = nullptr;
@@ -205,6 +237,9 @@ void App::RegisterCommands()
     g_theEventSystem->SubscribeEventCallbackFunction("LoadGameConfig", App::LoadFromGameConfig);
     g_theEventSystem->SubscribeEventCallbackFunction("PlayerReady",    App::PlayerReady);
     g_theEventSystem->SubscribeEventCallbackFunction("SwitchPlayer",   App::SwitchPlayer);
+    g_theEventSystem->SubscribeEventCallbackFunction("PrintHand",      App::PrintHand);
+    g_theEventSystem->SubscribeEventCallbackFunction("PrintPlayerHand", App::PrintPlayerHand);
+    g_theEventSystem->SubscribeEventCallbackFunction("PrintOpponentHand", App::PrintOpponentHand);
 }
 
 void App::SetScreenSize()
@@ -310,6 +345,27 @@ bool App::SwitchPlayer(EventArgs& args)
 {
     UNUSED(args);
     g_theApp->m_theGame->SwitchPlayerInterface();
+    return true;
+}
+
+bool App::PrintHand(EventArgs& args)
+{
+    int playerIndex = args.GetValue("PlayerIndex", g_theApp->m_theGame->m_mainPlayerIndex);
+    PrintPlayerHandToConsole(g_theApp->m_theGame->GetPlayer(playerIndex));
+    return true;
+}
+
+bool App::PrintPlayerHand(EventArgs& args)
+{
+    UNUSED(args);
+    PrintPlayerHandToConsole(g_theApp->m_theGame->GetPlayer(g_theApp->m_theGame->m_mainPlayerIndex));
+    return true;
+}
+
+bool App::PrintOpponentHand(EventArgs& args)
+{
+    UNUSED(args);
+    PrintPlayerHandToConsole(g_theApp->m_theGame->GetPlayer(g_theApp->m_theGame->m_otherPlayerIndex));
     return true;
 }
 

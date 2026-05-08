@@ -538,7 +538,7 @@ bool Card::IsScrollToolCardPlayable() const
 
 Player* Card::GetOpponentPlayer() const
 {
-    return m_owner->m_game->GetAnotherPlayer();
+    return m_owner->GetAnotherPlayer();
 }
 
 int Card::GetMainPlayerIndex() const

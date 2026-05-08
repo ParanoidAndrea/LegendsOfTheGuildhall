@@ -115,14 +115,15 @@ Duel::Duel(Player* owner, CardData const& cardData, AABB2 const& widgetArea, Vec
 
 void Duel::Play()
 {
+    m_owner->m_game->AddGlobalText(m_owner->m_playerName + " play Duel.");
     EventArgs args;
     args.SetValue("PlayerIndex", m_owner->m_playerIndex);
     args.SetValue("TargetNextActionState", (int)GetOpponentPlayer()->m_actionState);
     args.SetValue("InitiatorNextActionState", (int)m_owner->m_actionState);
-    FireEvent("InitializeDuelPlayer" + ToString(GetOpponentPlayerIndex()),args);
     m_owner->SetCentralInfoText("Waiting for response...");
     m_owner->CreateNormalButton();
     m_owner->m_actionState = ActionState::Normal;
+    FireEvent("InitializeDuelPlayer" + ToString(GetOpponentPlayerIndex()),args);
 }
 
 bool Duel::IsPlayable() const

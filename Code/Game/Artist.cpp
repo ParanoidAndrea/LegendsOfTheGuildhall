@@ -3,8 +3,8 @@
 #include "Game/Game.hpp"
 #include "Engine/Core/EventSystem.hpp"
 #include "Engine/Core/Timer.hpp"
-April::April(Game* game, int playerIndex, bool IsAI /*= false*/)
-    :Player(game, playerIndex, "April","April.png", IsAI)
+April::April(Game* game, int playerIndex)
+    :Player(game, playerIndex, "April","April.png")
 {
     m_maxHealth = 3;
     m_currentHealth = 3;

@@ -22,6 +22,9 @@ public:
 
 	static bool PlayerReady(EventArgs& args);
 	static bool SwitchPlayer(EventArgs& args);
+	static bool PrintHand(EventArgs& args);
+	static bool PrintPlayerHand(EventArgs& args);
+	static bool PrintOpponentHand(EventArgs& args);
 private:
 
 	void RegisterCommands();

@@ -355,6 +355,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Artist.cpp" />
     <ClCompile Include="BasicCard.cpp" />
+    <ClCompile Include="BossAIController.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="CardDeck.cpp" />
     <ClCompile Include="CardManager.cpp" />
@@ -371,6 +372,7 @@
     <ClInclude Include="App.hpp" />
     <ClInclude Include="Artist.hpp" />
     <ClInclude Include="BasicCard.hpp" />
+    <ClInclude Include="BossAIController.hpp" />
     <ClInclude Include="Card.hpp" />
     <ClInclude Include="CardDeck.hpp" />
     <ClInclude Include="CardManager.hpp" />
@@ -380,6 +382,7 @@
     <ClInclude Include="GameCommon.hpp" />
     <ClInclude Include="ManipulateWidget.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="PlayerController.hpp" />
     <ClInclude Include="Programmer.hpp" />
     <ClInclude Include="ScrollToolCard.hpp" />
   </ItemGroup>

@@ -9,6 +9,7 @@ class Game;
 class Textbox;
 class ScrollBox;
 class ManipulateWdiget;
+class PlayerController;
 
 enum class PlayerState
 {
@@ -34,7 +35,7 @@ enum class ActionState
 class Player
 {
 public:
-    Player(Game* game, int playerIndex, std::string const& playerName, std::string const& playerIconPath, bool IsAI = false);
+    Player(Game* game, int playerIndex, std::string const& playerName, std::string const& playerIconPath);
     ~Player();
     void InitializeWidgets();
     void ChangeCardsInHand();
@@ -107,6 +108,7 @@ public:
     bool Event_RespondDuelTakeDamage(EventArgs& args);
     bool Debug_DrawSpecificCard(EventArgs& args);
 
+    void SetController(PlayerController* controller);
     void ResetNormalPhrase();
     void ResetActionPhrase();
     void ExitStrike();
@@ -130,6 +132,7 @@ public:
     int m_playerIndex = 0;
     int m_otherPlayerIndex = 1;
     bool m_isDebug = false;
+    PlayerController* m_controller = nullptr;
     Widget* m_cardsInHandWidget = nullptr;
     Textbox* m_centralInfoText = nullptr;
     Widget* m_playerWidget = nullptr;

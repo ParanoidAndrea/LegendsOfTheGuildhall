@@ -3,18 +3,18 @@
 class Yenna : public Player
 {
 public:
-    Yenna(Game* game, int playerIndex, bool IsAI = false);
+    Yenna(Game* game, int playerIndex);
 };
 
 class DavidF : public Player
 {
 public:
-    DavidF(Game* game, int playerIndex, bool IsAI = false);
+    DavidF(Game* game, int playerIndex);
 };
 
 class Son : public Player
 {
 public:
-    Son(Game* game, int playerIndex, bool IsAI = false);
+    Son(Game* game, int playerIndex);
     virtual void TakeDamage() override;
 };

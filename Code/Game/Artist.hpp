@@ -3,6 +3,6 @@
 class April : public Player 
 {
 public:
-    April(Game* game, int playerIndex, bool IsAI = false);
+    April(Game* game, int playerIndex);
    virtual void EnterDrawPhrase() override;
 };

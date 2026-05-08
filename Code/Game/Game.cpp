@@ -10,6 +10,7 @@
 #include "Game/CardDeck.hpp"
 #include "Engine/Render/BitmapFont.hpp"
 #include "Game/Artist.hpp"
+#include "Game/BossAIController.hpp"
 #include "Game/Programmer.hpp"
 #include "Engine/UI/Textbox.hpp"
 #include "Engine/Core/NetSystem.hpp"
@@ -129,8 +130,8 @@ void Game::StartupPlayer()
 	{
 
 	}
-	Player* player1 = new DavidF(this, 0, false);
-	Player* player2 = new Son(this, 1, true);
+	Player* player1 = new DavidF(this, 0);
+	Player* player2 = new Son(this, 1);
 
 	m_players.push_back(player1);
 	m_players.push_back(player2);

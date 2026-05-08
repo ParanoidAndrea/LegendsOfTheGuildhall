@@ -2,14 +2,14 @@
 #include "Engine/Math/MathUtils.hpp"
 #include "Game/Game.hpp"
 #include "Game/Gamecommon.hpp"
-Yenna::Yenna(Game* game, int playerIndex, bool IsAI /*= false*/)
-    :Player(game, playerIndex,"Yenna", "Yenna_Logo.png", IsAI)
+Yenna::Yenna(Game* game, int playerIndex)
+    :Player(game, playerIndex,"Yenna", "Yenna_Logo.png")
 {
 
 }
 
-Son::Son(Game* game, int playerIndex, bool IsAI /*= false*/)
-:Player(game, playerIndex,"Son", "Son.png", IsAI)
+Son::Son(Game* game, int playerIndex)
+:Player(game, playerIndex,"Son", "Son.png")
 {
 
 }
@@ -22,8 +22,8 @@ void Son::TakeDamage()
     DrawCardsLocal(1);
 }
 
-DavidF::DavidF(Game* game, int playerIndex, bool IsAI /*= false*/)
-:Player(game, playerIndex,"David", "DavidF.png", IsAI)
+DavidF::DavidF(Game* game, int playerIndex)
+:Player(game, playerIndex,"David", "DavidF.png")
 {
     m_isPlayingStrikeInfinite = true;
 }
